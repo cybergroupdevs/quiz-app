@@ -92,7 +92,7 @@ import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRa
       path: 'sample' ,
       component: SampleComponent
     }, {
-      path: 'addques' ,
+      path: 'questions' ,
       component: AddQuestionsComponent
     } ,
     {
@@ -104,11 +104,11 @@ import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRa
       component: LoginComponent
     },
     {
-      path: 'category' ,
+      path: 'categories' ,
       component : CategorySelectComponent
     },
     {
-      path: 'team',
+      path: 'teams',
       component: TeamListComponent
     }, {
       path: 'rounds',
@@ -127,7 +127,6 @@ import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRa
       AddNewCategoryDialogComponent,
       AddNewTeamDialogComponent,
       AddNewRoundDialogComponent],
-
     bootstrap: [AppComponent]
   })
 

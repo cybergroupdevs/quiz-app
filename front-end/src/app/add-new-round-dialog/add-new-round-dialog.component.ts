@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import { MatDialogRef , MAT_DIALOG_DATA } from '@angular/material';
+import { HttpWrapperService } from '../services/http-wrapper.service';
 import { FormArray } from '@angular/forms/src/model';
 
 
@@ -12,23 +13,31 @@ import { FormArray } from '@angular/forms/src/model';
 export class AddNewRoundDialogComponent implements OnInit {
 
   roundForm: FormGroup;
+  baseUrl = this._http.baseUrl ;
+  categoryList: any;
   constructor(private _fB: FormBuilder ,
     private _dialogRef: MatDialogRef<AddNewRoundDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any  ) { }
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private _http?: HttpWrapperService) {
+      this._http.get(this.baseUrl + '/api/category').subscribe(response => {
+        console.log(response);
+        this.categoryList = response;
+      });
+    }
 
     categoryForRound: Array<any> = [];
     newCategory: any = {};
     categoryFinal: Array<any> = [];
-  categoryList = [{
-    _id: 1 ,
-    name: 'Angular'
-  }, {
-    _id: 2 ,
-    name: 'Logo'
-  }, {
-    _id: 3 ,
-    name: 'Vocab'
-  }];
+  // categoryList = [{
+  //   _id: 1 ,
+  //   name: 'Angular'
+  // }, {
+  //   _id: 2 ,
+  //   name: 'Logo'
+  // }, {
+  //   _id: 3 ,
+  //   name: 'Vocab'
+  // }];
 
   pushCategory() {
     debugger;

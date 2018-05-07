@@ -16,8 +16,8 @@
         </mat-expansion-panel-header>
         <mat-form-field>
             <mat-select placeholder="Select Category" formControlName="category">
-                <mat-option *ngFor="let category of categoryList" [value]="category.name">
-                  {{ category.name }}
+                <mat-option *ngFor="let category of categoryList" [value]="category.categoryName">
+                  {{ category.categoryName }}
                 </mat-option>
               </mat-select>
           </mat-form-field>
