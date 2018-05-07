@@ -1,4 +1,6 @@
 var db = require("./db")
+var mongoose = require('mongoose');
+
 var team = db.Schema({
     name: {
         type: String,
@@ -13,6 +15,7 @@ var team = db.Schema({
         required: true
         //select: false
     },
+
     createdAt: {
         type: Date,
         default: new Date(),

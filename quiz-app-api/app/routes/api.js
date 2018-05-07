@@ -50,6 +50,10 @@ apiRoutes = function (router) {
 
     //Teams Controller
     router.post("/team" ,api.team.create);
+    router.get("/team", api.team.list);
+    router.delete("/team/:_id",api.team.delete);
+    router.put("/team/:_id", api.team.update);
+    router.get("/team/:_id", api.team.show);
 
     return router;
 };

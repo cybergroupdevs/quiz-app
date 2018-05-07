@@ -23,8 +23,8 @@ var user = db.Schema({
         type: String
     },   
     userRole: {
-        type: String
-        required: true,
+        type: String,
+        required: true
         // enum: ['USER', 'ADMIN', 'PRESENTER'],
         // default: 'USER'
     },
