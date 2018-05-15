@@ -1,4 +1,4 @@
-<div>
+<div class="parentDisable">
     <div class=row>
       <div class="filter col-sm-4" *ngFor="let round of roundlist; let i=index">
         <mat-card class="card">
@@ -16,7 +16,7 @@
               </div> 
             </div>
             <div class="col-sm-2">  
-              <div class="cardicon2"><span class="icon"><mat-icon (click)="addNewRound(round._id)">edit</mat-icon></span></div>
+              <div class="cardicon2"><span class="icon"><mat-icon (click)="addEditRound(round._id)">edit</mat-icon></span></div>
             </div>
             <div class="col-sm-2">  
               <div class="cardicon"><span class="icon"><mat-icon (click)="deleteRound(round._id)">delete</mat-icon></span></div>
@@ -25,5 +25,5 @@
         </mat-card>
       </div>
     </div>
-  <button mat-fab class="fabbtn" title="Add New Round" (click)="addNewRound()"><mat-icon>add</mat-icon></button> 
+  <button mat-fab class="fabbtn" title="Add New Round" (click)="addEditRound()"><mat-icon>add</mat-icon></button> 
 </div>

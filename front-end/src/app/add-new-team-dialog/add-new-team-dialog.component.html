@@ -5,18 +5,24 @@
         <mat-form-field>
           <input matInput formControlName="teamName" placeholder="Enter Team Name">
         </mat-form-field>
-      <mat-form-field>
-          <mat-select placeholder="Selet Teammates" formControlName="member" multiple>
-            <mat-option *ngFor="let player of participent" [value]="player.name">
-              {{ player.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="row" formArrayName="members"
+             *ngFor="let item of firstFormGroup.get('members').controls; let i = index;">
+          <div class="col-sm-8" [formGroupName]="i" >
+              <mat-form-field>
+                  <input matInput formControlName = "member" #participant  placeholder="Enter Participent name">
+              </mat-form-field>  
+          </div>
         </div>
+          <div class="col-sm-4">
+              <a (click)="addMember(participant)" class="point">
+                  <strong> add member + </strong>
+                </a>
+          </div>
+      </div>
     </mat-dialog-content>
     <div class="button-row">
     <mat-dialog-actions>
-      <button  mat-raised-button class="btn-orng" type="button" (click) ="submit(firstFormGroup)" [disabled]="!firstFormGroup.valid" mat-dialog-close >Add</button>
+      <button  mat-raised-button class="btn-orng" type="button" (click) ="submit()" [disabled]="!firstFormGroup.valid" mat-dialog-close >Add</button>
       <button  mat-raised-button class="btn-orng" type="button" mat-dialog-close>Cancel</button>
     </mat-dialog-actions>
   </div>

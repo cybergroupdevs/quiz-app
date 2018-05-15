@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div [formGroup]="roundForm">
  <h2 mat-dialog-title>Add New Round</h2> 
   <mat-dialog-content>
@@ -18,18 +19,93 @@
             <mat-select placeholder="Select Category" formControlName="category">
                 <mat-option *ngFor="let category of categoryList" [value]="category.categoryName">
                   {{ category.categoryName }}
+=======
+<div [formGroup]="roundForm" id="popup"   >
+  <h2 mat-dialog-title >{{title}}</h2> 
+  <mat-dialog-content >
+    <div class="row">
+      <div class="col-sm-6" >
+        <mat-form-field class="inputWidth">
+          <input matInput formControlName="roundName" placeholder="Enter Round name">
+        </mat-form-field>    
+      </div>
+      <div class="col-sm-6">
+          <mat-form-field class="inputWidth">
+              <mat-select placeholder="Select Round type" formControlName="roundType" >
+                <mat-option *ngFor="let round of categoryList" [value]="round.name">
+                  {{ round.name }}
                 </mat-option>
               </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput type="number" placeholder="Count" formControlName="numberOfQuestion" min="1" >
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput type="number" placeholder="Points" formControlName="point" min="1" >
             </mat-form-field>
-            <button mat-button color="accent" (click)="pushCategory()">Add</button>
-      </mat-expansion-panel>
-    </mat-accordion>
-           
+      </div>
+    </div>   
+    <div class="row" >
+      <div class="col-md-12" >
+        <div class="row">
+          <div class="col-md-11">
+            <span>Add Category </span>
+          </div>
+        </div>
+        <div class="row" >
+          <div class="col-md-4">
+            <mat-input-container>
+              <mat-select #Cat placeholder="Select Category" >
+                <mat-option *ngFor="let category of categoryList" [value]="category.name">
+                  {{ category.name }}
+>>>>>>> f49d1d02068fd8fec798704d00574cc071815841
+                </mat-option>
+              </mat-select>
+            </mat-input-container>
+          </div>
+          <div class="col-md-4">
+            <mat-input-container>
+              <input matInput #num type="number"  placeholder="Number of Question">
+            </mat-input-container>
+          </div>
+          <div class="col-md-4">
+            <mat-input-container>
+              <input matInput #pnt type="number"  placeholder="point">
+            </mat-input-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <a (click)="addCategory(Cat, num, pnt)" class="point">
+          <strong> add category + </strong>
+        </a>
+      </div>
+    </div>
+    <div class="row" formArray="CategoryFinal" class= "example-container modal-dialog"  style="height:100%;overflow-y:auto;">
+      <table  class="table table-striped" >
+        <thead>
+          <tr *ngIf="getCategory().length > 1">
+            <th>Category</th>
+            <th>Number of Question</th>
+            <th>Point</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let a of getCategory(); let i = index" >
+            <tr *ngIf= "isNotNull(a)">
+              <td>{{a.category}}</td>
+              <td>{{a.numberOfQuestion}}</td>
+              <td>{{a.point}}</td>
+              <td><span *ngIf="getCategory().length > 1" (click)="removeCategory(i)" class="glyphicon glyphicon-remove">X</span></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
   </mat-dialog-content>
+    <div style="height:70px">
+        <mat-dialog-actions class="flex-container">
+            <button  mat-raised-button class="widthInput btn-orng col-sm-4" type="button" (click) ="submit(roundForm)" [disabled]="!roundForm.valid || getCategory().length <= 1" mat-dialog-close >Add</button>
+            <button  mat-raised-button class="widthInput  btn-orng col-sm-4" type="button" mat-dialog-close>Cancel</button>
+        </mat-dialog-actions>
+    </div>
+       
+  
 </div>

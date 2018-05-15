@@ -1,14 +1,18 @@
-var router = require('express').Router()
-var users = require('./api/users')
-var analytics = require('./api/analytics')
-var user = require('./api/UserController')
-var quiz = require('./api/QuizController')
-var category = require('./api/CategoryController')
-var team = require('./api/TeamController')
-var clients = require('./admin/clients')
-var adminUsers = require('./admin/adminUsers')
+/**
+ * Module dependencies.
+ */
+ /*jshint esversion: 6 */
+var router = require('express').Router();
+var users = require('./api/users');
+var analytics = require('./api/analytics');
+var user = require('./api/UserController');
+var quiz = require('./api/QuizController');
+var category = require('./api/CategoryController');
+var team = require('./api/TeamController');
+var clients = require('./admin/clients');
+var adminUsers = require('./admin/adminUsers');
 
-var question = require("./api/QuestionController")
+var question = require("./api/QuestionController");
 module.exports = {
     // Extras
     // init: init,
@@ -21,9 +25,9 @@ module.exports = {
     quiz: quiz,
     category: category,
     question: question,
-    team:team,
+    team: team,
 
-  // Admin Endpoints
-  "clients": clients,
-  "adminUsers": adminUsers
+    // Admin Endpoints
+    clients: clients,
+    adminUsers: adminUsers
 };

@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+ /*jshint esversion: 6 */
 "use-strict";
 
 const express = require("express");

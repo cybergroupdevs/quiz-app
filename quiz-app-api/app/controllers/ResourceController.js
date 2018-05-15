@@ -1,22 +1,24 @@
+/**
+ * Module dependencies.
+ */
+ /*jshint esversion: 6 */
 class ResourceController {
 
   constructor(model) {
     this.Model = model;
   }
 
-  create(data) {
-    return new Promise((resolve, reject) => {
-      var model = new this.Model(data);
+  create(req, res) {
+      let dataObj = {};
+      Object.keys(req.body).forEach(function(key){dataObj[key]=req.body[key];});
+      var model = new this.Model(dataObj);
+
       model.save((err, response) => {
         if (err) {
           reject(err);
         }
-        resolve(response);
-      });
-    })
-      .catch((e) => {
-        console.log(e)
-      });
+        res.send(response);
+      });    
   }
 
   index(queryString) {
@@ -41,7 +43,7 @@ class ResourceController {
           });
         });
     })
-      .catch((e) => { })
+      .catch((e) => { });
   }
 
   list(req, res) {
@@ -55,7 +57,7 @@ class ResourceController {
       });
     })
       .then((result) => {
-        console.log(result)
+        console.log(result);
         res.send(result);
       })
       .catch((e) => { });
@@ -90,8 +92,7 @@ class ResourceController {
         resolve(response);
       });
     });
-
-    // res.send("update called from resource controller")
+   
   }
 
   delete(id) {
@@ -108,6 +109,10 @@ class ResourceController {
         resolve(response);
       });
     });
+  }
+
+  test(req,res){
+     res.send("update called from resource controller");
   }
 }
 

@@ -28,4 +28,48 @@
     padding: 5px;
     cursor: pointer;
  }
- 
+h2{
+    text-align:center
+ }
+ .inputWidth{
+    width:100%;
+ }
+
+ .marginClass{
+    
+    margin-right: 10px;
+ }
+ .flex-container {
+    display: flex;
+   flex-direction: row;
+   justify-content: center;
+  }
+  .he {
+    height: auto;
+    min-height: 400px;
+    overflow: hidden;
+}
+#maincontent{
+    position: fixed; 
+    top: 100px; /*Set top value to HeightOfTopFrameDiv*/
+    margin-left:auto;
+        margin-right: auto;
+    bottom: 110px; /*Set bottom value to HeightOfBottomFrameDiv*/
+    overflow: auto; 
+    background: #fff;
+        width: 800px;
+    }
+    
+    .example-container {
+        display: flex;
+        flex-direction: column;
+        max-height: 500px;
+        min-width: 300px;
+      }
+      
+      .mat-table {
+        overflow: auto;
+        max-height: 500px;
+      }
+
+      

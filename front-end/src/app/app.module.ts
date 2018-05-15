@@ -31,7 +31,8 @@ import { AddNewRoundDialogComponent } from './add-new-round-dialog/add-new-round
 // Material Imports
 import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRadioModule,
   MatCardModule, MatExpansionModule, MatIconModule, MatFormFieldModule,
-  MatInputModule, MatDatepickerModule, MatNativeDateModule, MatChipsModule , MatDialogModule, MatSnackBarModule } from '@angular/material';
+  MatInputModule, MatDatepickerModule, MatNativeDateModule, MatChipsModule , MatDialogModule, MatSnackBarModule
+  , MatTableModule } from '@angular/material';
 
   @NgModule({
     declarations: [
@@ -76,6 +77,7 @@ import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRa
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatTableModule,
     HttpModule,
     RouterModule.forRoot([
     {

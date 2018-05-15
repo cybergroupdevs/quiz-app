@@ -9,6 +9,7 @@ import {AddNewRoundDialogComponent} from '../add-new-round-dialog/add-new-round-
   templateUrl: './rounds.component.html',
   styleUrls: ['./rounds.component.scss']
 })
+
 export class RoundsComponent implements OnInit {
 
   round: {};
@@ -29,34 +30,47 @@ export class RoundsComponent implements OnInit {
         _id : 1 ,
         roundName : 'Round1',
         roundType : 'buzzer',
+        category  : [{
+          categoryId : 1 ,
+          numberOfQuestion : 3,
+          points : 5
+        }]
       }, {
-        _id : 1 ,
-        roundName : 'Round1',
+        _id : 2 ,
+        roundName : 'Round2',
         roundType : 'buzzer',
+        category  : [{
+          categoryId : 1 ,
+          numberOfQuestion : 3,
+          points : 5
+        }]
       }];
     }
 
-    addNewRound(id?): void {
+    addEditRound(id = 1): void {
+      debugger;
       if (id) {
-        this.getRoundById(id).subscribe(response => {
-          this.round = response;
+        // this.getRoundById(id).subscribe(response => {
+          // this.round = response;
+          this.round = this.roundlist[id];
           this.dialogRef = this._dialog.open(AddNewRoundDialogComponent, {
-            width: '250px',
+            width: '700px',
             height : 'auto',
             hasBackdrop : false,
             data : this.round
           });
-          this.dialogRef.afterClosed().subscribe( data => {
-            console.log('Edit Dialog closed');
-            this._http.get(this.baseUrl + '/api/round').subscribe(response => {
-              console.log(response);
-              this.roundlist = response;
-            });
-          });
+        this.dialogRef.afterClosed().subscribe( data => {
+          console.log('Edit Dialog closed');
+            // this._http.get(this.baseUrl + '/api/round').subscribe(response => {
+            // console.log(response);
+            // this.roundlist = response;
+            // });
+          // });
         });
       } else {
         this.dialogRef = this._dialog.open(AddNewRoundDialogComponent, {
-          width : '500px' ,
+          width : '750px' ,
+          height : 'auto' ,
           hasBackdrop : false,
           data : ''
         });
@@ -70,30 +84,30 @@ export class RoundsComponent implements OnInit {
     }
   }
 
-    deleteround(id) {
-      this._http.delete(this.baseUrl + '/api/round/' + id)
-      .subscribe(response => {
-        this._http.get(this.baseUrl + '/api/round').subscribe(response => {
-          console.log(response);
-          this.roundlist = response;
-        });
-        this._snackBar.open('Deleted Round', '' , {
-          duration: 2000
-        });
-      });
-    }
+    // deleteround(id) {
+    //   this._http.delete(this.baseUrl + '/api/round/' + id)
+    //   .subscribe(response => {
+    //     this._http.get(this.baseUrl + '/api/round').subscribe(response => {
+    //       console.log(response);
+    //       this.roundlist = response;
+    //     });
+    //     this._snackBar.open('Deleted Round', '' , {
+    //       duration: 2000
+    //     });
+    //   });
+    // }
 
-    getRoundById(id: string): Observable<Response> {
-      return this._http.get(this.baseUrl + '/api/round/' + id );
-    }
+    // getRoundById(id: string): Observable<Response> {
+    //   return this._http.get(this.baseUrl + '/api/round/' + id );
+    // }
 
     gradColor() {
       this.isGradColorCalled = true;
       const color = [
-        'linear-gradient(120deg, #FF82A9 0%, #FFA4C0 51%, #FFBAD0 75%)',
-        'linear-gradient(120deg, #56CBF9 0%, #A2E2FB 51%, #B2E7FC 75%)',
-        'linear-gradient(120deg, #6DD1A3 0%, #79E8B5 51%, #85FFC7 75%)',
-        'linear-gradient(120deg, #ff9a9e 0%, #ff99cc 51%, #fecfef 90%)',
+      'linear-gradient(120deg, #FF82A9 0%, #FFA4C0 51%, #FFBAD0 75%)',
+      'linear-gradient(120deg, #56CBF9 0%, #A2E2FB 51%, #B2E7FC 75%)',
+      'linear-gradient(120deg, #6DD1A3 0%, #79E8B5 51%, #85FFC7 75%)',
+      'linear-gradient(120deg, #ff9a9e 0%, #ff99cc 51%, #fecfef 90%)',
       'linear-gradient(120deg, #E6FF89 0%, #D2FF28 51%, #DEFF62 75%)',
       'linear-gradient(120deg, #9900FF 0%, #9933FF 51%, #9966FF 75%)',
       'linear-gradient(120deg, #FF9900 0%, #FFCC00 51%, #FFFF00 75%)',

@@ -1,9 +1,10 @@
 // # API routes
-var express = require("express"),
+ /*jshint esversion: 6 */
+let express = require("express"),
     api = require("../controllers"),
     apiRoutes;
-var path = require("path")
-
+let path = require("path");
+let wrapper = require("../controllers/wrapper.js");
 apiRoutes = function (router) {
     router = express.Router();
 
@@ -25,18 +26,19 @@ apiRoutes = function (router) {
     // router.get("/user/:_id", api.user.show);
 
     // Quiz controller
-    router.post("/quiz", api.quiz.create);
-    router.get("/quiz", api.quiz.list);
-    router.get("/quiz/:_id", api.quiz.show);
-    router.put("/quiz/:_id", api.quiz.update);
-    router.delete("/quiz/:_id",api.quiz.delete);
+    router.get("/quiz/test", (req, res) => {api.quiz.test(req,res);});
+    router.post("/quiz", (req, res) => {api.quiz.create(req,res);});
+    router.get("/quiz", (req, res) => {api.quiz.list(req,res);});
+    router.get("/quiz/:_id", (req, res) => {api.quiz.show(req,res);});
+    router.put("/quiz/:_id", (req, res) => {api.quiz.update(req,res);});
+    router.delete("/quiz/:_id", (req, res) => {api.quiz.delete(req,res);});
 
     // Category controller
-    router.post("/category", api.category.create);
-    router.get("/category/:_id", api.category.show);
-    router.put("/category/:_id", api.category.update);
-    router.get("/category", api.category.list);
-    router.delete("/category/:_id",api.category.delete)
+    router.post("/category", (req, res) => {api.category.create(req,res);});
+    router.get("/category/:_id", (req, res) => {api.category.show(req,res);});
+    router.put("/category/:_id", (req, res) => {api.category.update(req,res);});
+    router.get("/category", (req, res) => {api.category.list(req,res);});
+    router.delete("/category/:_id",(req, res) => {api.category.delete(req,res);});
 
     // Questions Controller
     router.get("/question", api.question.read);
