@@ -14,40 +14,6 @@ import { CategorySelectComponent } from '../category-select/category-select.comp
 export class AddNewRoundDialogComponent implements OnInit {
 
   roundForm: FormGroup;
-<<<<<<< HEAD
-  baseUrl = this._http.baseUrl ;
-  categoryList: any;
-  constructor(private _fB: FormBuilder ,
-    private _dialogRef: MatDialogRef<AddNewRoundDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any,
-    private _http?: HttpWrapperService) {
-      this._http.get(this.baseUrl + '/api/category').subscribe(response => {
-        console.log(response);
-        this.categoryList = response;
-      });
-    }
-
-    categoryForRound: Array<any> = [];
-    newCategory: any = {};
-    categoryFinal: Array<any> = [];
-  // categoryList = [{
-  //   _id: 1 ,
-  //   name: 'Angular'
-  // }, {
-  //   _id: 2 ,
-  //   name: 'Logo'
-  // }, {
-  //   _id: 3 ,
-  //   name: 'Vocab'
-  // }];
-
-  pushCategory() {
-    debugger;
-    this.newCategory = this.roundForm.controls.categoryFinal.value[0].category ;
-    console.log(this.newCategory);
-    // Control.push(this.initCategory());
-    }
-=======
   title = 'Add New Round';
     newCategory: any ;
     categoryFinal: FormArray;
@@ -61,7 +27,6 @@ export class AddNewRoundDialogComponent implements OnInit {
       _id: 3 ,
       name: 'Vocab'
     }];
->>>>>>> f49d1d02068fd8fec798704d00574cc071815841
 
   constructor(private _fB: FormBuilder ,
               private _dialogRef: MatDialogRef<AddNewRoundDialogComponent>,

@@ -113,10 +113,6 @@ export class CategorySelectComponent implements OnInit {
       'linear-gradient(120deg, #FF82A9 0%, #FFA4C0 51%, #FFBAD0 75%)',
       'linear-gradient(120deg, #56CBF9 0%, #A2E2FB 51%, #B2E7FC 75%)',
       'linear-gradient(120deg, #E4BE9E 0%, #E6C3A6 51%, #EDD5C1 75%)'];
-<<<<<<< HEAD
-=======
-
->>>>>>> f49d1d02068fd8fec798704d00574cc071815841
       for (let i = 0; i < this.categorylist.length; i++) {
         if (this.gradientCounter === 3) {
           this.gradientCounter = 0;
