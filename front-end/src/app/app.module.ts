@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 // services
 import {HttpWrapperService} from './services/http-wrapper.service';
 import {AuthService} from './services/authservice.service';
+import { AuthGuard } from './services/auth-guard.service';
 
 // Components
 import {AppComponent} from './app.component';
@@ -94,27 +95,32 @@ import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRa
       path: 'sample' ,
       component: SampleComponent
     }, {
-      path: 'addques' ,
-      component: AddQuestionsComponent
+      path: 'questions' ,
+      component: AddQuestionsComponent,
+      canActivate: [AuthGuard]
     } ,
     {
       path: 'quiz-select',
-      component: QuizSelectComponent
+      component: QuizSelectComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'login' ,
       component: LoginComponent
     },
     {
-      path: 'category' ,
-      component : CategorySelectComponent
+      path: 'categories' ,
+      component : CategorySelectComponent,
+      canActivate: [AuthGuard]
     },
     {
-      path: 'team',
-      component: TeamListComponent
+      path: 'teams',
+      component: TeamListComponent,
+      canActivate: [AuthGuard]
     }, {
       path: 'rounds',
-      component: RoundsComponent
+      component: RoundsComponent,
+      canActivate: [AuthGuard]
     }, {
      path: '**',
       component: NotFoundComponent
@@ -123,13 +129,13 @@ import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRa
        ],
     providers: [
     HttpWrapperService,
+    AuthGuard,
     AuthService
     ],
     entryComponents: [ AddNewTeamDialogComponent,
       AddNewCategoryDialogComponent,
       AddNewTeamDialogComponent,
       AddNewRoundDialogComponent],
-
     bootstrap: [AppComponent]
   })
 

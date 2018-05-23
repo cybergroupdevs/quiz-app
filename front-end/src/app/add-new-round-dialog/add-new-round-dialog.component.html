@@ -1,3 +1,23 @@
+<div [formGroup]="roundForm">
+ <h2 mat-dialog-title>Add New Round</h2> 
+  <mat-dialog-content>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Enter Round Name
+        </mat-expansion-panel-header>
+          <mat-form-field>
+            <input matInput formControlName="roundName" placeholder="Enter Round name">
+          </mat-form-field>   
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Select Category
+        </mat-expansion-panel-header>
+        <mat-form-field>
+            <mat-select placeholder="Select Category" formControlName="category">
+                <mat-option *ngFor="let category of categoryList" [value]="category.categoryName">
+                  {{ category.categoryName }}
 <div [formGroup]="roundForm" id="popup"   >
   <h2 mat-dialog-title >{{title}}</h2> 
   <mat-dialog-content >
@@ -30,6 +50,7 @@
               <mat-select #Cat placeholder="Select Category" >
                 <mat-option *ngFor="let category of categoryList" [value]="category.name">
                   {{ category.name }}
+>>>>>>> f49d1d02068fd8fec798704d00574cc071815841
                 </mat-option>
               </mat-select>
             </mat-input-container>
