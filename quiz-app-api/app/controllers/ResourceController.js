@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
- /*jshint esversion: 6 */
+/*jshint esversion: 6 */
 class ResourceController {
 
   constructor(model) {
@@ -9,110 +9,84 @@ class ResourceController {
   }
 
   create(req, res) {
-      let dataObj = {};
-      Object.keys(req.body).forEach(function(key){dataObj[key]=req.body[key];});
-      var model = new this.Model(dataObj);
-
-      model.save((err, response) => {
-        if (err) {
-          reject(err);
-        }
-        res.send(response);
-      });    
-  }
-
-  index(queryString) {
-    return new Promise((resolve, reject) => {
-      var model = this.Model;
-      model.find({}, "", {
-        "skip": ((queryString.perPage * queryString.page) - queryString.limit),
-        "limit": (queryString.limit || 10)
-      },
-        (err, response) => {
-          if (err) {
-            reject(err);
-          }
-          if (response.length === 0) {
-            resolve({"message": "Questions Finished!", "response": response});
-          }
-          resolve({
-            "page": (queryString.page || 1),
-            "perPage": (queryString.perPage || 10),
-            "limit": (queryString.limit || 10),
-            "response": response
-          });
-        });
-    })
-      .catch((e) => { });
+    const model = new this.Model(req.body);
+    model.save((err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.send(response);
+    });
   }
 
   list(req, res) {
-    return new Promise((resolve, reject) => {
-      var model = this.Model;
-      model.find({}, (err, response) => {
+    const pageProps = req.body.pageProps ? {
+      page: req.body.pageProps.page || 1,
+      perPage: req.body.pageProps.perPage || 10
+    } : {
+      page: 1,
+      perPage: 10
+    };
+
+    this.Model.find({}, {}, {
+        skip: (pageProps.page-1)*pageProps.perPage,
+        limit: pageProps.perPage
+      },
+      (err, response) => {
         if (err) {
-          reject(err);
+          res.status(500).send(err);
         }
-        resolve(response);
-      });
-    })
-      .then((result) => {
-        console.log(result);
-        res.send(result);
-      })
-      .catch((e) => { });
+        if (response.length === 0) {
+          res.send({
+            message: "Questions Finished!",
+            response: response
+          });
+        }
+        res.send({
+          page: pageProps.page,
+          perPage: pageProps.perPage,
+          response: response
+        });
+      }
+    );
   }
 
-  show(id) {
-    return new Promise((resolve, reject) => {
-      var model = this.Model;
-      model.find({
-        "_id": id
-      }, (err, response) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(response);
-      });
+  show(req, res) {
+    const id = req.params._id;
+    this.Model.find({
+      "_id": id
+    }, (err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.send(response);
     });
   }
 
-  update(body) {
-    /* console.log(`this is the value of this ${Object.getOwnPropertyNames(this)}`);
-    console.log("this is the value of this" + this);
-    console.log("update called"); */
-
-    return new Promise((resolve, reject) => {
-      var model = this.Model;
-      model.update({ "_id": body.id }, body, (err, response) => {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(response);
-      });
-    });
-   
-  }
-
-  delete(id) {
-    /* console.log(`this is the value of this ${Object.getOwnPropertyNames(this)}`);
-    console.log("this is the value of this" + this);
-    console.log("update called"); */
-
-    return new Promise((resolve, reject) => {
-      var model = this.Model;
-      model.remove({ "_id": id }, (err, response) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(response);
-      });
+  update(req, res) {
+    this.Model.update({
+      "_id": req.params._id
+    }, req.body, (err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.send(response);
     });
   }
 
-  test(req,res){
-     res.send("update called from resource controller");
+  delete(req, res) {
+    const id = req.params._id;
+    this.Model.remove({
+      "_id": id
+    }, (err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.send(response);
+    });
+  }
+
+  test(req, res) {
+    res.send("update called from resource controller");
   }
 }
 

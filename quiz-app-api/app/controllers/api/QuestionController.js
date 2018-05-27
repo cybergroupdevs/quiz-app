@@ -3,13 +3,15 @@
 */
 
 const ResoureController = require("./../ResourceController");
-const { Question } = require("./../../models");
+const {
+  Question
+} = require("./../../models");
 
 class QuestionController extends ResoureController {
   constructor(...args) {
     super(args[0]);
     this.listAllQuestions = args[1]; // store map of all questions from DB
-    this.totalQuestions = 0;         // obtain total number of questions in the list
+    this.totalQuestions = 0; // obtain total number of questions in the list
     this.randoms = [];
     this.idx = 0;
   }
@@ -24,12 +26,16 @@ const question = {
       .then((result) => {
         res
           .status(200)
-          .json({ "status": "SUCCESS" });
+          .json({
+            "status": "SUCCESS"
+          });
       })
       .catch((e) => {
         res
           .status(404)
-          .json({ "status": "Not Found" });
+          .json({
+            "status": "Not Found"
+          });
       });
   },
 
@@ -66,7 +72,10 @@ const question = {
       .catch((e) => {
         res
           .status(404)
-          .json({ "status": "Not Found", "Text": e });
+          .json({
+            "status": "Not Found",
+            "Text": e
+          });
       });
 
     const mapQuestions = (result) => {
@@ -99,7 +108,10 @@ const question = {
       .catch((e) => {
         res
           .status(404)
-          .json({ "status": "Not Found", "Text": e });
+          .json({
+            "status": "Not Found",
+            "Text": e
+          });
       });
   },
 
@@ -117,7 +129,10 @@ const question = {
       .catch((e) => {
         res
           .status(404)
-          .json({ "status": "Not Found", "Text": e });
+          .json({
+            "status": "Not Found",
+            "Text": e
+          });
       });
   },
 
@@ -127,7 +142,10 @@ const question = {
       var _result = [];
       if (_result.includes(req.query.page) === false) {
         for (const [key, value] of ques.listAllQuestions) {
-          _result.push({ key, value });
+          _result.push({
+            key,
+            value
+          });
         }
         return _result;
       }

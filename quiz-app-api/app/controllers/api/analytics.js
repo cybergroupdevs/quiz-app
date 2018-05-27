@@ -2,10 +2,10 @@ var router = require('express').Router()
 
 
 var analytics = {
-    totalCountOfUsers: function(req, res, next) {
-        
-    }
-    
+  totalCountOfUsers: function (req, res, next) {
+
+  }
+
 }
 
 

@@ -9,11 +9,11 @@ const Team = require("./team");
 const User = require("./user");
 
 module.exports = {
-    Category,
-    Client,
-    Question,
-    Quiz,
-    Round,
-    Team,
-    User
+  Category,
+  Client,
+  Question,
+  Quiz,
+  Round,
+  Team,
+  User
 }

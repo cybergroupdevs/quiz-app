@@ -1,7 +1,6 @@
 var Questions = require("./../app/models/question");
 
-var questions = [
-  {
+var questions = [{
     description: "What Java is famous for?",
     options: [{
       answer: "It's Architecture neutral and suitable for web-apps development",

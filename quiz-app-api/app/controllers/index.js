@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
- /*jshint esversion: 6 */
+/*jshint esversion: 6 */
 var router = require('express').Router();
 var users = require('./api/users');
 var analytics = require('./api/analytics');
@@ -14,20 +14,20 @@ var adminUsers = require('./admin/adminUsers');
 
 var question = require("./api/QuestionController");
 module.exports = {
-    // Extras
-    // init: init,
-    // http: http,
+  // Extras
+  // init: init,
+  // http: http,
 
-    // API Endpoints
-    users: users,
-    analytics: analytics,
-    user: user,
-    quiz: quiz,
-    category: category,
-    question: question,
-    team: team,
+  // API Endpoints
+  users: users,
+  analytics: analytics,
+  user: user,
+  quiz: quiz,
+  category: category,
+  question: question,
+  team: team,
 
-    // Admin Endpoints
-    clients: clients,
-    adminUsers: adminUsers
+  // Admin Endpoints
+  clients: clients,
+  adminUsers: adminUsers
 };

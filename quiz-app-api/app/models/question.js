@@ -5,13 +5,11 @@ var question = db.Schema({
     type: String,
     required: true
   },
-  options: [
-    {
-      answer: String,
-      isCorrect: Boolean,
-      isImage: Boolean
-    }
-  ],
+  options: [{
+    answer: String,
+    isCorrect: Boolean,
+    isImage: Boolean
+  }],
   difficulty: {
     type: String
   },
