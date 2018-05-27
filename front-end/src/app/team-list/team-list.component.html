@@ -1,28 +1,39 @@
-<div>
-  <br/>
-  <br/>
-   <div class=row>
-    <div class="filter col-sm-4" *ngFor="let team of teamList">
-    <a (click)="teamPopup(team)">
-      <mat-card class="example-card">
-        <div class="row">
-          <div class="col-sm-6">
-            <mat-card-title>
-              {{ team.name }}
-            </mat-card-title> 
+<div class="parentDisable">
+  <div class=row>
+    <div class="filter col-sm-4" *ngFor="let team of teamList; let i=index">
+      <mat-card class="card">
+        <div class="row padding">
+          <div class="col-sm-2">
+            <div class="grad1 padding-grad" [ngStyle]="bgChange(i)">
+              <span class=" padding-grad text">{{team.name[0]}}</span>
             </div>
-            <div class="col-sm-6">
-                  <mat-chip-list class="mat-chip-list-stacked">
-                      <mat-chip *ngFor="let name of team.member" class="chipbg" >
-                          {{name}}
-                      </mat-chip>
-                  </mat-chip-list>
+          </div>
+          <div class="col-sm-4">
+            <div>
+              <mat-card-title>&nbsp;          
+                {{ team.name }}           
+              </mat-card-title>          
             </div>
-        </div>     
-      </mat-card>
-    </a>
+          </div>
+          <div class="col-sm-4">
+            <mat-chip-list class="mat-chip-list-stacked">
+              <mat-chip *ngFor="let name of team.member" selected="true" class="chipMargin">
+                {{name}}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="col-sm-2 leftPadding">
+            <div class="row minHeigh">
+              <div class="cardicon2 col-sm-12">
+                <span class="icon"><mat-icon (click)="addEditRound(round._id)">edit</mat-icon></span>
+              </div>
+              <div class="cardicon2 col-sm-12">
+                <span class="icon"><mat-icon (click)="deleteRound(round._id)">delete</mat-icon></span></div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
     </div>
+    <button mat-fab class="fabbtn" title="Add New Team" (click)="teamPopUp()"><mat-icon>add</mat-icon></button> 
   </div>
-  
-  </div>
-  <button mat-fab class="fabbtn" title="Add New Team" (click)="teamPopUp()"><mat-icon>add</mat-icon></button>

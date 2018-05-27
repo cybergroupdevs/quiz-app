@@ -27,13 +27,14 @@ import { AddNewCategoryDialogComponent } from './add-new-category-dialog/add-new
 import { AddNewTeamDialogComponent, DIALOG_DATA } from './add-new-team-dialog/add-new-team-dialog.component';
 import { RoundsComponent } from './rounds/rounds.component';
 import { AddNewRoundDialogComponent } from './add-new-round-dialog/add-new-round-dialog.component';
-
+import {CdkTableModule} from '@angular/cdk/table';
 
 // Material Imports
 import {MatSelectModule, MatFormField, MatButtonModule, MatCheckboxModule, MatRadioModule,
   MatCardModule, MatExpansionModule, MatIconModule, MatFormFieldModule,
   MatInputModule, MatDatepickerModule, MatNativeDateModule, MatChipsModule , MatDialogModule, MatSnackBarModule
-  , MatTableModule } from '@angular/material';
+  , MatTableModule , MatChipInputEvent } from '@angular/material';
+
 
   @NgModule({
     declarations: [

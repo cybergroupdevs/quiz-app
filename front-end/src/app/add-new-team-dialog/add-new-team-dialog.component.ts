@@ -1,6 +1,7 @@
 import { Component, OnInit, InjectionToken, Inject } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm, FormArray} from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatChipInputEvent} from '@angular/material';
+import {ENTER, COMMA} from '@angular/cdk/keycodes';
 
 export const DIALOG_DATA = new InjectionToken('DIALOG_DATA');
 
@@ -12,38 +13,63 @@ export const DIALOG_DATA = new InjectionToken('DIALOG_DATA');
 export class AddNewTeamDialogComponent implements OnInit {
 
   firstFormGroup: FormGroup ;
-  participent: any ;
+  participents: any = [];
+  visible: boolean = true;
+  selectable: boolean = true;
+  removable: boolean = true;
+  addOnBlur: boolean = true;
+
+  // Enter, comma
+  separatorKeysCodes = [ENTER, COMMA];
+
+
   constructor(private _fb: FormBuilder ,
               public dialogRef: MatDialogRef<AddNewTeamDialogComponent>,
               @Inject(MAT_DIALOG_DATA) _participent: any) {
-                this.participent = _participent;
+                this.participents = _participent;
               }
 
   ngOnInit() {
     this.firstFormGroup = this._fb.group({
       teamName : ['', [Validators.required]] ,
-      members : this._fb.array([ this.initMembers()
-      ])
+      members : this._fb.array([ new FormControl()]) ,
+      password : [, [Validators.required]]
   });
   }
 
-  initMembers() {
-    return this._fb.group({
-      member : ''
-    });
+  get members() {
+    return this.firstFormGroup.get('members') as FormArray;
   }
 
-  addMember(participant) {
-    const control = <FormArray>this.firstFormGroup.controls['members'];
-    control.push(this.initMembers());
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      this.members.push(new FormControl(value.trim()));
+    }
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  getNonNullMembers() {
+    return this.members.controls.filter((member) => member.value !== null);
   }
 
 
-submit() {
-  const name = this.firstFormGroup.controls.teamName.value ;
-  const teamMember = this.firstFormGroup.controls.members.value;
-  console.log(name + ' ' + teamMember );
-  // Need to access service once created by node team
-}
+  remove(participent: any): void {
+    const index = this.members.controls.indexOf(participent);
+    if (index >= 0) {
+      this.members.controls.splice(index, 1);
+    }
+  }
 
+  submit() {
+    const name = this.firstFormGroup.controls.teamName.value ;
+    const teamMember = this.firstFormGroup.controls.members.value;
+    const pwd = this.firstFormGroup.controls.password.value;
+    console.log(name + ' ' + teamMember + ' ' + pwd);
+    // Need to access service once created by node team
+  }
 }

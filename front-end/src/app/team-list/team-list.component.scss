@@ -20,3 +20,101 @@ mat-chip {
 .chipbg{
     background-color: $accent-color;
 }
+
+.grad1 {
+    position: relative;
+     float: left;
+     width: 60px;
+     height: 152px; 
+     color: white;
+     opacity: 0.95;
+ }
+ .text {
+     color: white;
+     font-size: 45px;
+     padding-left: 12px;
+     
+ }
+ .icon{
+    padding: 5px;
+    cursor: pointer;
+ }
+ .filter {
+     margin-top: 10px;
+     margin-bottom: 20px;
+ }  
+ .example-card:hover{
+     box-shadow: 2px 2px 2px 2px rgba(50, 50, 50, 0.1);
+ }
+ .example-card:hover .icon{
+     opacity: 1;
+ }
+ .fabbtn{
+     position: fixed;
+     bottom: 30px;
+     right: 30px;
+     outline: none; 
+ }
+ 
+ .headerimage{
+    
+     float: left;
+     width: 60px;
+     height: 60px; 
+     border: 1px solid rgba(0, 0, 0, .2);
+ }
+ .mat-card{
+     display:flex;
+     padding: 0px;
+ }
+ .mat-card-title{
+     top: 20px;
+     margin-bottom: 0%;
+     display: inherit;
+ }
+ .cardicon{
+     width: 30px;
+     padding-top: 14px;
+     padding-left: 0px;
+     padding-right:10px;
+     right: 2px;
+     top: 18px;
+ }
+ 
+ .padding{
+     padding-left: 12px;
+     padding-top: 12px;
+     padding-bottom: 12px;
+ }
+ .padding-grad{
+     padding-top : 30px;
+     display: inline-block;
+     vertical-align: middle;
+     float: none;
+ }
+ .cardicon2{
+     width: 30px;
+     padding-top: 14px;
+     padding-right: 0px;
+     border-right:0px; 
+     align-self : center;
+    padding-left: inherit;
+
+ }
+
+ .leftPadding{
+    padding-left: 10px;
+    float: left;
+ }
+
+ .chipMargin{
+    margin-bottom: 8px; 
+ }
+
+ .col-sm-4{
+    margin : auto ; 
+ }
+
+ div.minHeigh{
+     min-height: 152px;
+ }
