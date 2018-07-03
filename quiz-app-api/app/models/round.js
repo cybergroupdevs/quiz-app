@@ -1,6 +1,6 @@
-var db = require('./db')
+const db = require('./db')
 
-var round = db.Schema({
+const roundSchema = db.Schema({
   roundName: {
     type: String,
     required: true,
@@ -10,24 +10,26 @@ var round = db.Schema({
     ref: 'Category',
     count: Number
   }],
-
-  weightage: {
-    type: Number
-  },
   type: {
     type: String,
     required: true,
     enum: ['BUZZER', 'PASS', 'TIMER'],
     default: 'TIMER'
   },
-  createdAt: {
-    type: Date,
-    default: new Date(),
+  positiveScore: {
+    type: Number,
+    required: true,
+    validate: (value) => value > 0
   },
-  updatedAt: {
-    type: Date,
-    default: new Date()
+  negativeScore: {
+    type: Number,
+    required: true,
+    validate: (value) => value <= 0
+  },
+  quizId: {
+    type: db.Schema.Types.ObjectId,
+    required: true
   }
 })
 
-module.exports = db.model('Round', round);
+module.exports = roundSchema

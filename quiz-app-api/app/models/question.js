@@ -1,6 +1,6 @@
-var db = require("./db");
+const db = require("./db");
 
-var question = db.Schema({
+const questionSchema = db.Schema({
   description: {
     type: String,
     required: true
@@ -25,15 +25,10 @@ var question = db.Schema({
   isAsked: {
     type: Boolean
   },
-  createdAt: {
-    type: Date,
-    default: new Date()
-  },
-  updatedAt: {
-    type: Date,
-    default: new Date()
+  quizId: {
+    type: db.Schema.Types.ObjectId,
+    required: true
   }
 })
 
-
-module.exports = db.model("Question", question);
+module.exports = questionSchema

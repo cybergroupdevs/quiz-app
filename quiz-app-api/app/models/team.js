@@ -1,7 +1,6 @@
-var db = require("./db")
-var mongoose = require('mongoose');
+const db = require("./db")
 
-var team = db.Schema({
+const teamSchema = db.Schema({
   name: {
     type: String,
     required: true,
@@ -14,17 +13,7 @@ var team = db.Schema({
     type: String,
     required: true
     //select: false
-  },
-
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-  updatedAt: {
-    type: Date,
-    default: new Date(),
   }
 })
 
-
-module.exports = db.model("Team", team)
+module.exports = teamSchema

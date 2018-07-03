@@ -1,6 +1,6 @@
-var db = require('./db')
+const db = require('./db')
 
-var category = db.Schema({
+const categorySchema = db.Schema({
   categoryName: {
     type: String,
     required: true,
@@ -9,10 +9,10 @@ var category = db.Schema({
     type: Boolean,
     default: true,
   },
-  createdAt: {
-    type: Date,
-    default: new Date(),
+  quizId: {
+    type: db.Schema.Types.ObjectId,
+    required: true
   }
 })
 
-module.exports = db.model('Category', category)
+module.exports = categorySchema
