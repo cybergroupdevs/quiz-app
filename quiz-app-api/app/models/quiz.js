@@ -11,7 +11,14 @@ const quizSchema = db.Schema({
   rounds: [{
     type: db.Schema.Types.ObjectId,
     ref: 'Round',
-  }]
+  }],
+  admin: {
+    type: db.Schema.Types.ObjectId,
+    required: true
+  },
+  presenter: {
+    type: db.Schema.Types.ObjectId,
+  }
 })
 
 module.exports = quizSchema
