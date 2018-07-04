@@ -27,8 +27,7 @@ const roundSchema = db.Schema({
     validate: (value) => value <= 0
   },
   quizId: {
-    type: db.Schema.Types.ObjectId,
-    required: true
+    type: db.Schema.Types.ObjectId
   }
 })
 

@@ -10,8 +10,7 @@ const categorySchema = db.Schema({
     default: true,
   },
   quizId: {
-    type: db.Schema.Types.ObjectId,
-    required: true
+    type: db.Schema.Types.ObjectId
   }
 })
 

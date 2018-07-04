@@ -26,8 +26,7 @@ const questionSchema = db.Schema({
     type: Boolean
   },
   quizId: {
-    type: db.Schema.Types.ObjectId,
-    required: true
+    type: db.Schema.Types.ObjectId
   }
 })
 
