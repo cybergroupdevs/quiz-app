@@ -1,5 +1,6 @@
-var db = require('./db')
-var user = db.Schema({
+const db = require('./db')
+
+const userSchema = db.Schema({
   name: {
     type: String,
     required: true
@@ -19,24 +20,14 @@ var user = db.Schema({
     required: true
     //unique: true
   },
-  photo: {
-    type: String
-  },
+  // photo: {
+  //   type: String
+  // },
   userRole: {
     type: String,
-    required: true
-    // enum: ['USER', 'ADMIN', 'PRESENTER'],
-    // default: 'USER'
-  },
-  createdAt: {
-    type: Date,
-    default: new Date()
-  },
-  updatedAt: {
-    type: Date,
-    default: new Date()
+    required: true,
+    enum: ['ADMIN', 'PRESENTER'],
   }
 })
 
-
-module.exports = db.model("User", user)
+module.exports = userSchema

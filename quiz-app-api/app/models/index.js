@@ -1,19 +1,13 @@
-/* 1    Aakash   10-04-2018 */
+const db = require('./db')
+const timestamp = require('./plugins/timestamp')
 
-const Category = require("./category");
-const Client = require("./client");
-const Question = require("./question");
-const Quiz = require("./quiz");
-const Round = require("./round");
-const Team = require("./team");
-const User = require("./user");
-
-module.exports = {
-  Category,
-  Client,
-  Question,
-  Quiz,
-  Round,
-  Team,
-  User
+const models = {
+  Category: db.model('Category', require("./category").plugin(timestamp)),
+  Question: db.model('Question', require("./question").plugin(timestamp)),
+  Quiz: db.model('Quiz', require("./quiz").plugin(timestamp)),
+  Round: db.model('Round', require("./round").plugin(timestamp)),
+  Team: db.model('Team', require("./team").plugin(timestamp)),
+  User: db.model('User', require("./user").plugin(timestamp))
 }
+
+module.exports = models

@@ -1,6 +1,6 @@
-var db = require("./db")
+const db = require("./db")
 
-var quiz = db.Schema({
+const quizSchema = db.Schema({
   quizName: {
     "type": String,
     "required": true,
@@ -12,10 +12,13 @@ var quiz = db.Schema({
     type: db.Schema.Types.ObjectId,
     ref: 'Round',
   }],
-  createdAt: {
-    "type": Date,
-    "default": new Date(),
+  admin: {
+    type: db.Schema.Types.ObjectId,
+    required: true
+  },
+  presenter: {
+    type: db.Schema.Types.ObjectId,
   }
 })
 
-module.exports = db.model("Quiz", quiz);
+module.exports = quizSchema
