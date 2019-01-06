@@ -1,7 +1,11 @@
 const db = require('./db')
 
 const userSchema = db.Schema({
-  name: {
+  firstname: {
+    type: String,
+    required: true
+  },
+  lastname: {
     type: String,
     required: true
   },
@@ -10,24 +14,28 @@ const userSchema = db.Schema({
     required: true
     //unique: true
   },
+  username: {
+    type: String,
+    required: true,
+    // unique: true
+  },
   password: {
     type: String,
     required: true
-    //select: false
   },
-  cgiCode: {
-    type: String,
-    required: true
-    //unique: true
-  },
+  // cgiCode: {
+  //   type: String,
+  //   required: true
+  //   //unique: true
+  // },
   // photo: {
   //   type: String
   // },
-  userRole: {
-    type: String,
-    required: true,
-    enum: ['ADMIN', 'PRESENTER'],
-  }
+  // userRole: {
+  //   type: String,
+  //   required: true,
+  //   enum: ['ADMIN', 'PRESENTER'],
+  // }
 })
 
 module.exports = userSchema

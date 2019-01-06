@@ -5,6 +5,7 @@ let express = require("express"),
   apiRoutes;
 let path = require("path");
 let wrapper = require("../controllers/wrapper.js");
+
 apiRoutes = function (router) {
   router = express.Router();
 
@@ -14,16 +15,12 @@ apiRoutes = function (router) {
   // router.get("/users/signin", api.users.signin);
   // router.get("/users/signout", api.users.signout);
 
-  // // ## Analytics
-  // router.get("/analytics/users", api.analytics.totalCountOfUsers);
+  router.get('/user/test', api.user.test)
 
-  // ## User
-  router.post("/user/signup", api.user.signup);
-  router.post("/user/session", api.user.session);
-  router.get("/user/signin", api.user.signin);
-  // router.get("/user/create", api.user.create);
-  // router.get("/user/list", api.user.list);
-  // router.get("/user/:_id", api.user.show);
+  router.get('/user', (req, res) => api.user.list(req, res))
+  router.post('/user', (req, res) => api.user.create(req, res))
+  router.get('/user/:_id', (req, res) => api.user.show(req, res))
+
 
   // Quiz controller
   router.get("/quiz/test", (req, res) => {

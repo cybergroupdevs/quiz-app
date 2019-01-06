@@ -9,7 +9,7 @@ class ResourceController {
   }
 
   create(req, res) {
-    const model = new this.Model(req.body);
+    const model = new this.Model(req.body.data);
     model.save((err, response) => {
       if (err) {
         res.status(500).send(err);
@@ -27,7 +27,10 @@ class ResourceController {
       perPage: 10
     };
 
-    this.Model.find({}, {}, {
+    const selection = req.selectionObject || {}
+    const projection = req.projectionObject || {}
+
+    this.Model.find(selection, projection, {
         skip: (pageProps.page-1)*pageProps.perPage,
         limit: pageProps.perPage
       },
@@ -37,7 +40,7 @@ class ResourceController {
         }
         if (response.length === 0) {
           res.send({
-            message: "Questions Finished!",
+            message: "No more data!",
             response: response
           });
         }
