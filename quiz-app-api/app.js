@@ -5,14 +5,15 @@
 "use-strict";
 
 const express = require("express");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const routes = require("./app/routes");
+const morgan = require("morgan")
 
 const app = express();
-const router = require("express").Router();
-const path = require("path");
-
+// const router = require("express").Router();
+// const path = require("path");
+app.use(morgan("dev"))
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, x-auth, Content-Type, Accept");
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({
   "extended": true,
   "limit": 153791147
 }));
+app.use(bodyParser.json())
 
 const port = process.env.PORT || 1830;
 
@@ -47,7 +49,7 @@ app.get(routes.ignition, function (req, res) {
 app.use(routes.apiBaseUri, routes.api(app));
 
 // Admin specific Routes
-app.use(routes.adminBaseUri, routes.admin(app));
+// app.use(routes.adminBaseUri, routes.admin(app));
 
 // app.use(express.static(path.resolve("public/assets/")))
 // app.use(express.static(path.resolve("public/app/views"))) app.get("*",
