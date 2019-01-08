@@ -5,25 +5,29 @@ let express = require("express"),
   apiRoutes;
 let path = require("path");
 let wrapper = require("../controllers/wrapper.js");
+
 apiRoutes = function (router) {
   router = express.Router();
 
-  // ## User Auth
-  // router.post("/users/signup", api.users.signup);
-  // router.post("/users/session", api.users.session);
-  // router.get("/users/signin", api.users.signin);
-  // router.get("/users/signout", api.users.signout);
+  router.get('/users/test', api.user.test)
+  router.get('/users', (req, res) => api.user.list(req, res))
+  router.post('/users', (req, res, next) => {
+    // Only allow this route if the boolean DEV_MODE is present & true in request body
+    if (!req.body.DEV_MODE) {
+      res.status(403).json({
+        message: 'This route is for Dev Mode only. Create New users via users/signup',
+        code: 'OFDM'
+      })
+    } else {
+      next()
+    }
+  }, (req, res) => api.user.create(req, res))
+  router.get('/users/:_id', (req, res) => api.user.show(req, res))
+  router.patch('/users/:_id', (req, res) => api.user.update(req, res))
+  router.delete('/users/:_id', (req, res) => api.user.delete(req, res))
+  router.post('/users/signup', (req, res) => api.user.signup(req, res))
+  router.post('/users/login', (req, res) => api.user.login(req, res))
 
-  // // ## Analytics
-  // router.get("/analytics/users", api.analytics.totalCountOfUsers);
-
-  // ## User
-  router.post("/user/signup", api.user.signup);
-  router.post("/user/session", api.user.session);
-  router.get("/user/signin", api.user.signin);
-  // router.get("/user/create", api.user.create);
-  // router.get("/user/list", api.user.list);
-  // router.get("/user/:_id", api.user.show);
 
   // Quiz controller
   router.get("/quiz/test", (req, res) => {

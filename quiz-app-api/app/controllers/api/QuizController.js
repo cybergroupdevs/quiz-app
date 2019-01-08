@@ -8,9 +8,6 @@
    constructor(...args) {
      super(...args);
    }
-   test(req, res) {
-     res.send('update called from class');
-   }
  }
  var qc = new QuizController(Quiz);
  // quiz = {
