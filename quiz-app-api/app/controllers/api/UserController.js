@@ -1,11 +1,9 @@
 /*jshint esversion: 6 */
 const ResourceController = require('../ResourceController');
-const {
-  User 
-} = require("../../models");
-// var bcrypt = require("bcryptjs");
-// var jwt = require("jwt-simple");
-// var config = require("../../../config/config.js");
+const { User } = require("../../models");
+const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
+const config = require('../../../config/config.js');
 
 
 class UserController extends ResourceController {
@@ -13,99 +11,131 @@ class UserController extends ResourceController {
     super(...args);
   }
 
-  // test(req, res) {
-  //   res.send('test from class')
-  // }
+  signup(req, res) {
+    // If the email already exists, don't signup a new email
+    User.findOne({ email: req.body.data.email })
+      .exec()
+      .then(result => {
+        if (result) {
+          return res.status(409).json({
+            message: 'Email Already Exists',
+            code: 'EAE'
+          })
+        } else {
+          // Hash the password to store it in the database
+          req.body.data.password = this.getHashedPassword(req.body.data.password)
+          this.create(req, res)
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({ error });
+      })
+  }
+
+  login(req, res) {
+    // Check if the email exists
+    User.findOne({ email: req.body.data.email })
+      .exec()
+      .then(user => {
+        if (user) {
+          // email found, now compare password
+          bcrypt.compare(req.body.data.password, user.password)
+            .then(passwordsMatch => {
+              if (passwordsMatch) {
+                // Generate JWT token for session management
+                const token = jwt.sign(
+                  {
+                    email: user.email,
+                    userId: user._id
+                  },
+                  config.jwt_secret,
+                  {
+                    expiresIn: "1h"
+                  }
+                );
+
+                res.status(200).json({
+                  message: 'Login Successful',
+                  code: 'LS',
+                  authToken: token
+                })
+              } else {
+                res.status(401).json({
+                  message: 'Incorrect Password',
+                  code: 'IP' 
+                })
+              }
+            })
+        } else {
+          // email not found
+          return res.status(401).json({
+            message: 'Email Does Not Exist',
+            code: 'ENE'
+          })
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({ error });
+      })
+  }
+
+  create(req, res) {
+    // Only allow this route if the boolean DEV_MODE is present & true in request body
+    if (!req.body.DEV_MODE) {
+      res.status(403).json({
+        message: 'This route is for Dev Mode only. Create New users via users/signup',
+        code: 'OFDM'
+      })
+    }
+    super.create(req, res)
+  }
+
+  list(req, res) {
+    // The user apis must never send back password
+    req.projectionObj = {
+      "password": 0
+    }
+    super.list(req, res)
+  }
+
+  show(req, res) {
+    // The user apis must never send back password
+    req.projectionObj = {
+      "password": 0
+    }
+    super.show(req, res)
+  }
+
+  update(req, res) {
+    // Email cannot be changed
+    if (req.body.data.email) {
+      res.status(403).json({
+        message: 'Email Address Cannot Be Changed',
+        code: 'ECNC'
+      })
+    }
+    // If password is to be updated, it will be hashed
+    if (req.body.data.password) {
+      req.body.data.password = this.getHashedPassword(req.body.data.password)
+    }
+    super.update(req, res)
+  }
+
+  getHashedPassword(plainPassword) {
+    // TODO: Do this asynchronously 
+    try {
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(plainPassword, salt)
+  
+      return hashedPassword;
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 const userController = new UserController(User);
-// user = {
-//   signup: (req, res, next) => {
-//     console.log(req.body);
-//     let user = new User({
-//       "name": req.body.name,
-//       "email": req.body.email,
-//       "cgiCode": req.body.cgiCode,
-//       "photo": req.body.photo,
-//       "userRole": req.body.userRole
-//     });
-//     bcrypt.hash(req.body.password, 10, (err, hash) => {
-//       user.password = hash;
-//       user.save((err, user) => {
-//         if (err) {
-//           console.error(err);
-//         }
-//         res.json(user); // TODO: Vishal // Change the response, send the password as well
 
-//       });
-//     });
-//   },
-//   session: (req, res, next) => {
-//     User.findOne({
-//         "email": req.body.email
-//       },
-//       (err, result) => {
-//         if (err) {
-//           return next(err);
-//         }
-//         if (!result) {
-//           return res.send(401);
-//         }
-//         bcrypt.compare(req.body.password, result.password, (err, valid) => {
-//           if (err) {
-//             return next(err);
-//           }
-//           if (!valid) {
-//             return res.send(401);
-//           }
-//           var token = jwt.encode({
-//             email: req.body.email,
-//             name: result.name
-//           }, config.secret);
-//           console.log(token);
-//           res.json(token);
-//         });
-//       });
-//   },
-//   signin: (req, res, next) => {
-//     if (!req.headers["x-auth"]) {
-//       return res.send(401, "You must send a valid header");
-//     }
-//     var auth = jwt.decode(req.headers["x-auth"], config.secret);
-//     User.findOne({
-//         "email": auth.email
-//       },
-//       (err, result) => {
-//         if (err) {
-//           return next(err);
-//         }
-//         res.json(result); // TODO: Vishal // Change the response, send the password as well
-//       });
-//   },
-//   create: (req, res) => {
-//     uc.create({
-//       "name": "Vishal",
-//       "email": "vishal@jatana.ai",
-//       "password": "123",
-//       "cgiCode": "CGI405",
-//       "photo": "https://vishalranjan.in/images/me.jpg",
-//       "userRole": "Admin"
-//     }).then((result) => {
-//       res.send(result);
-//     });
-//   },
-//   list: (req, res) => {
-//     uc.index().then((result) => {
-//       res.send(result);
-//     });
-//   },
-//   show: (req, res) => {
-//     uc.show(req.params._id).then((result) => {
-//       res.send(result);
-//     });
-//   }
-
-
-
-// };
 module.exports = userController;

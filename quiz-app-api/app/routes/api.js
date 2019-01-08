@@ -15,11 +15,15 @@ apiRoutes = function (router) {
   // router.get("/users/signin", api.users.signin);
   // router.get("/users/signout", api.users.signout);
 
-  router.get('/user/test', api.user.test)
+  router.get('/users/test', api.user.test)
 
-  router.get('/user', (req, res) => api.user.list(req, res))
-  router.post('/user', (req, res) => api.user.create(req, res))
-  router.get('/user/:_id', (req, res) => api.user.show(req, res))
+  router.get('/users', (req, res) => api.user.list(req, res))
+  router.post('/users', (req, res) => api.user.create(req, res))
+  router.get('/users/:_id', (req, res) => api.user.show(req, res))
+  router.patch('/users/:_id', (req, res) => api.user.update(req, res))
+  router.delete('/users/:_id', (req, res) => api.user.delete(req, res))
+  router.post('/users/signup', (req, res) => api.user.signup(req, res))
+  router.post('/users/login', (req, res) => api.user.login(req, res))
 
 
   // Quiz controller

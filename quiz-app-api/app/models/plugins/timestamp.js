@@ -5,9 +5,11 @@ module.exports = function timestamp(schema) {
     updatedAt: Date
   })
 
+  // TODO pre-save is not called for update. So this piece of code needs to be
+  // modified in the future
   // Create a pre-save hook
   schema.pre('save', function (next) {
-    let now = Date.now()
+    let now = new Date()
 
     this.updatedAt = now
     // Set a value for createdAt only if it is null
