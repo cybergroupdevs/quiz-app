@@ -81,17 +81,6 @@ class UserController extends ResourceController {
       })
   }
 
-  create(req, res) {
-    // Only allow this route if the boolean DEV_MODE is present & true in request body
-    if (!req.body.DEV_MODE) {
-      res.status(403).json({
-        message: 'This route is for Dev Mode only. Create New users via users/signup',
-        code: 'OFDM'
-      })
-    }
-    super.create(req, res)
-  }
-
   list(req, res) {
     // The user apis must never send back password
     req.projectionObj = {
