@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Aux from "../Aux/Aux";
+import Aux from "../../hoc/Aux/Aux";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 
 class Layout extends Component {

@@ -24,6 +24,10 @@ class UserController extends ResourceController {
         } else {
           // Hash the password to store it in the database
           req.body.data.password = this.getHashedPassword(req.body.data.password)
+          
+          req.body.data.username = req.body.data.username 
+            || req.body.data.fullname.replace(/\s/g,'').toLowerCase() + req.body.data.password.replace(/\D/g, '').substring(4)
+            
           this.create(req, res)
         }
       })

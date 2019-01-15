@@ -34,3 +34,8 @@
   color: white;
   background-color: var(--danger);
 }
+
+.Info {
+  color: var(--gray-text);
+  background-color: var(--info-dark)
+}

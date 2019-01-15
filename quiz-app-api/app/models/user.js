@@ -1,11 +1,7 @@
 const db = require('./db')
 
 const userSchema = db.Schema({
-  firstname: {
-    type: String,
-    required: true
-  },
-  lastname: {
+  fullname: {
     type: String,
     required: true
   },
