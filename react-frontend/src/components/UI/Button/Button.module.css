@@ -1,0 +1,41 @@
+.Button {
+  background-color: transparent;
+  padding: 10px;
+  font-weight: 700;
+  height: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  font: inherit;
+  font-weight: 600;
+}
+
+.Button:hover {
+  opacity: 0.9;
+}
+
+.Normal {
+  color: var(--gray-text);
+  background-color: var(--gray-light);
+}
+
+.Accent {
+  color: white;
+  background-color: var(--accent-color);
+}
+
+.Success {
+  color: white;
+  background-color: var(--success);
+}
+
+.Danger {
+  color: white;
+  background-color: var(--danger);
+}
+
+.Info {
+  color: var(--gray-text);
+  background-color: var(--info-dark)
+}

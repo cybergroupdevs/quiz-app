@@ -1,0 +1,8 @@
+.AuthManager {
+  display: flex;
+}
+
+.HorizontalStub {
+  width: 10px;
+  height: 0px;
+}
