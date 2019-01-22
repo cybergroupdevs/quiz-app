@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './ComponentTester.module.css'
-import Card from '../../components/UI/Card/Card'
-import Backdrop from '../../components/UI/Backdrop/Backdrop'
+// import Card from '../../components/UI/Card/Card'
+// import Backdrop from '../../components/UI/Backdrop/Backdrop'
 import Modal from '../../components/UI/Modal/Modal'
 
 class ComponentTester extends Component {

@@ -132,6 +132,15 @@ class AuthManager extends Component {
       })
   }
 
+  switchAuthAccessHandler = () => {
+    this.setState((prevState) => {
+      return {
+        isLoggingIn: !prevState.isLoggingIn,
+        isSigningUp: !prevState.isSigningUp
+      }
+    })
+  }
+
   render() {
     const formElementsArray = []
 		for (let key in this.state.authForm) {
@@ -150,6 +159,7 @@ class AuthManager extends Component {
     
     let form = formElementsArray.map(formElement => (
       <Input 
+        className={styles.AuthInput}
         key={formElement.id}
         elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
@@ -159,6 +169,14 @@ class AuthManager extends Component {
         invalid={!formElement.config.valid}
         value={formElement.config.value} />
     ))
+    
+    let authFooterText = this.state.isLoggingIn ? "Don't have an account? " : "Already have an account? "
+    const authFooter = (
+      <div className={styles.AuthFooter}>
+        {authFooterText}
+        <span className={styles.Link} onClick={this.switchAuthAccessHandler}>{this.state.isLoggingIn ? "Sign up" : "Log in"}</span>
+      </div>
+    )
 
     return (
       <div className={styles.AuthManager}>
@@ -170,12 +188,16 @@ class AuthManager extends Component {
           Sign Up
         </Button>
         <Modal
+          className={styles.AuthModal}
           show={this.state.openAuthForm}
-          modalClosed={this.closeAuthFormHandler}>
+          modalClosed={this.closeAuthFormHandler}
+          header={this.state.isLoggingIn ? 'Log In to to your quizz account' : 'Sign Up and start quizzing'}>
+          <Logo className={styles.AuthLogo} />  
           <form onSubmit={this.submitHandler}>
             {form}
-            <Button btnType="Info">{this.state.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>
+            <Button className={styles.AuthSubmitBtn} btnType="Accent">{this.state.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>
           </form>
+          {authFooter}
         </Modal>
       </div>
     );

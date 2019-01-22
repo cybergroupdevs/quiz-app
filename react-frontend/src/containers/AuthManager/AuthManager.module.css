@@ -6,3 +6,44 @@
   width: 10px;
   height: 0px;
 }
+
+.AuthModal {
+  top: 20% !important; 
+}
+
+.AuthLogo {
+  width: 99px;
+  margin: 0 auto;
+}
+
+.AuthInput:first-of-type {
+  padding-top: 16px;
+}
+
+.AuthInput {
+  padding-bottom: 8px;
+}
+
+.AuthSubmitBtn {
+  width: 100%;
+  padding: 17px !important;
+  margin-bottom: 8px;
+}
+
+.AuthFooter {
+  border-top: var(--gray) 1px solid;
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.AuthFooter .Link  {
+  color: var(--accent-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.AuthFooter .Link:hover  {
+  color: var(--accent-color-dark);
+}

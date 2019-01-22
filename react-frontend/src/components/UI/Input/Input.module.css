@@ -1,6 +1,5 @@
 .Input {
 	width: 100%;
-	padding: 10px;
 	box-sizing: border-box;
 }
 
@@ -12,10 +11,11 @@
 
 .InputElement {
 	outline: none;
-	border-radius: 1px solid #ccc;
+	border: var(--gray) 1px solid;
+	border-radius: 5px;
 	background-color: white;
 	font: inherit;
-	padding: 6px 10px;	
+	padding: 16px;	
 	display: block;
 	width: 100%;
 	box-sizing: border-box;
@@ -23,10 +23,9 @@
 
 .InputElement:focus {
 	outline: none;
-	background-color: #ccc;
+	border: var(--info-dark) 1px solid;
 }
 
 .Invalid {
-	border: 1px solid red;
-	background-color: #FDA49A;
+	border: var(--danger-dark) 1px solid;
 }
