@@ -3,9 +3,10 @@ import styles from './AuthManager.module.css'
 import Button from '../../components/UI/Button/Button'
 import Modal from '../../components/UI/Modal/Modal'
 import Input from '../../components/UI/Input/Input'
-import { checkValidity } from '../../misc/utility'
+import checkValidity from '../../utility/checkValidity'
 import Logo from '../../components/Logo/Logo'
-import axios from '../../misc/axios'
+import * as actions from '../../store/actions'
+import { connect } from 'react-redux'
 
 class AuthManager extends Component {
 
@@ -113,7 +114,7 @@ class AuthManager extends Component {
 
   submitHandler = (event) => {
     event.preventDefault()
-    const authUrl = this.state.isLoggingIn ? '/users/login' : '/users/signup'
+
     const reqBody = {
       data: {
         email: this.state.authForm.email.value,
@@ -123,13 +124,8 @@ class AuthManager extends Component {
     if (this.state.isSigningUp) {
       reqBody.data['fullname'] = this.state.authForm.fullname.value  
     }
-    axios.post(authUrl, reqBody)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+
+    this.props.onAuth(reqBody, this.state.isSigningUp)
   }
 
   switchAuthAccessHandler = () => {
@@ -204,4 +200,16 @@ class AuthManager extends Component {
   }
 }
 
-export default AuthManager
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (authData, isSignup) => dispatch(actions.auth(authData, isSignup))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthManager)

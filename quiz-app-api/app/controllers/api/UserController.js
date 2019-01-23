@@ -62,7 +62,10 @@ class UserController extends ResourceController {
                 res.status(200).json({
                   message: 'Login Successful',
                   code: 'LS',
-                  authToken: token
+                  auth: {
+                    token: token,
+                    expiresIn: "1h"
+                  }
                 })
               } else {
                 res.status(401).json({
