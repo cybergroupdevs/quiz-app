@@ -55,7 +55,7 @@ class UserController extends ResourceController {
                   },
                   config.jwt_secret,
                   {
-                    expiresIn: "1h"
+                    expiresIn: 3600 //Number of seconds after this token expires
                   }
                 );
 
@@ -64,7 +64,7 @@ class UserController extends ResourceController {
                   code: 'LS',
                   auth: {
                     token: token,
-                    expiresIn: "1h"
+                    expiresIn: "3600"
                   }
                 })
               } else {
