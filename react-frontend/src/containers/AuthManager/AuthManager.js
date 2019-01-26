@@ -7,6 +7,7 @@ import checkValidity from '../../utility/checkValidity'
 import Logo from '../../components/Logo/Logo'
 import * as actions from '../../store/actions'
 import { connect } from 'react-redux'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 class AuthManager extends Component {
 
@@ -54,49 +55,23 @@ class AuthManager extends Component {
 				touched: false
 			}
     },
-    openAuthForm: false,
-    isSigningUp: false,
-    isLoggingIn: false,
+    isLoggingIn: this.props.location.state ? this.props.location.state.isLoggingIn : true,
   };
 
   openSignUpFormHandler = () => {
     this.setState({
-      openAuthForm: true,
-      isSigningUp: true,
       isLoggingIn: false
     })
   }
 
   openLogInFormHandler = () => {
     this.setState({
-      openAuthForm: true,
-      isSigningUp: false,
       isLoggingIn: true
     })
   }
 
   closeAuthFormHandler = () => {
-    this.setState((prevState) => {
-      return {
-        openAuthForm: false,
-        isSigningUp: false,
-        isLoggingIn: false,
-        authForm: {
-          fullname: {
-            ...prevState.authForm.fullname,
-            value: ''
-          },
-          email: {
-            ...prevState.authForm.email,
-            value: ''
-          },
-          password: {
-            ...prevState.authForm.password,
-            value: ''
-          }
-        }
-      }
-    })
+    this.props.history.goBack()
   }
 
   inputChangedHandler = (event, controlName) => {
@@ -121,18 +96,18 @@ class AuthManager extends Component {
         password: this.state.authForm.password.value
       }
     }
-    if (this.state.isSigningUp) {
+    if (!this.state.isLoggingIn) {
+      // If Signing Up
       reqBody.data['fullname'] = this.state.authForm.fullname.value  
     }
 
-    this.props.onAuth(reqBody, this.state.isSigningUp)
+    this.props.onAuth(reqBody, !this.state.isLoggingIn)
   }
 
   switchAuthAccessHandler = () => {
     this.setState((prevState) => {
       return {
         isLoggingIn: !prevState.isLoggingIn,
-        isSigningUp: !prevState.isSigningUp
       }
     })
   }
@@ -140,15 +115,17 @@ class AuthManager extends Component {
   render() {
     const formElementsArray = []
 		for (let key in this.state.authForm) {
-      if((this.state.isLoggingIn && key !== 'fullname') || this.state.isSigningUp) {
+      if (this.state.isLoggingIn && key !== 'fullname') {
+        // If Logging In, don't use the field fullname
         formElementsArray.push({
           id: key,
           config: this.state.authForm[key]
         })
-      }
-      if (this.state.isLoggingIn) {
-        formElementsArray.filter(formElement => {
-          return false;
+      } else if (!this.state.isLoggingIn) {
+        // If Signing Up, use all fields
+        formElementsArray.push({
+          id: key,
+          config: this.state.authForm[key]
         })
       }
     }
@@ -176,19 +153,12 @@ class AuthManager extends Component {
 
     return (
       <div className={styles.AuthManager}>
-        <Button btnType="Normal" clicked={this.openLogInFormHandler}>
-          Log In
-        </Button>
-        <div className={styles.HorizontalStub} />
-        <Button btnType="Accent" clicked={this.openSignUpFormHandler}>
-          Sign Up
-        </Button>
         <Modal
           className={styles.AuthModal}
-          show={this.state.openAuthForm}
+          show={true}
           modalClosed={this.closeAuthFormHandler}
           header={this.state.isLoggingIn ? 'Log In to to your quizz account' : 'Sign Up and start quizzing'}>
-          <Logo className={styles.AuthLogo} />  
+          {this.props.loading ? <Spinner className={styles.AuthSpinner} /> : <Logo className={styles.AuthLogo} />}  
           <form onSubmit={this.submitHandler}>
             {form}
             <Button className={styles.AuthSubmitBtn} btnType="Accent">{this.state.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>

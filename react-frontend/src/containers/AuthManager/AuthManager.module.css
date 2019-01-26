@@ -16,6 +16,11 @@
   margin: 0 auto;
 }
 
+.AuthSpinner {
+  font-size: 14px;
+  margin: 3.8em auto !important;
+}
+
 .AuthInput:first-of-type {
   padding-top: 16px;
 }

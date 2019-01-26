@@ -15,7 +15,7 @@ class App extends Component {
     const routes = (
       <Switch>
         <Route path='/test' component={ComponentTester} />
-        <Route path='/' exact component={Layout} />
+        <Route path='/' component={Layout} />
         <Redirect to='/' />
       </Switch>
     )

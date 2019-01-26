@@ -46,11 +46,18 @@ export const auth = (authData, isSignUp) => {
     axios.post(url, authData)
       .then(response => {
         console.log(response)
-        const expirationDate = new Date(new Date().getTime() + response.data.auth.expiresIn*1000)
-        localStorage.setItem(constants.AUTH_TOKEN, response.data.auth.token)
-        localStorage.setItem(constants.AUTH_EXPIRATION_DATE, expirationDate)
-        dispatch(authSuccess(response.data.auth.token))
-        dispatch(setAuthTimeout(response.data.auth.expiresIn))
+        if(isSignUp) {
+          // Since the user has successfully signed up, we will log him in as well.
+          dispatch(authSuccess(null))
+          delete authData.data.fullname
+          dispatch(auth(authData, false))
+        } else {
+          const expirationDate = new Date(new Date().getTime() + response.data.auth.expiresIn*1000)
+          localStorage.setItem(constants.AUTH_TOKEN, response.data.auth.token)
+          localStorage.setItem(constants.AUTH_EXPIRATION_DATE, expirationDate)
+          dispatch(authSuccess(response.data.auth.token))
+          dispatch(setAuthTimeout(response.data.auth.expiresIn))
+        }
       })
       .catch(error => {
         console.log(error.response)
