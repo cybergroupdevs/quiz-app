@@ -2,11 +2,6 @@
   display: flex;
 }
 
-.HorizontalStub {
-  width: 10px;
-  height: 0px;
-}
-
 .AuthModal {
   top: 20% !important; 
 }

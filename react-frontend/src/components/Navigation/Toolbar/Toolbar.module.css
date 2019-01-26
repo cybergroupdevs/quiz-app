@@ -16,3 +16,13 @@
   height: 100%;
   width: 66px;
 }
+
+.AuthButtons {
+  padding: 0 !important;
+}
+
+.HorizontalStub {
+  width: 10px;
+  height: 0px;
+  display: inline-block;
+}
