@@ -9,7 +9,7 @@ const error404Page = (props) => {
       <div className={styles.Emoji}>:&#40;</div>
       <div>
         <p className={styles.ErrorHeader}>404 - Page Not Found</p>
-        <p className={styles.ErrorBody}>The page you are looking for might have been removed had its name changed or is 
+        <p className={styles.ErrorBody}>The page you are looking for might have been removed, had its name changed or is 
         temporarily unavailable.</p>
         <Button
           clicked={() => props.history.push('/')}
