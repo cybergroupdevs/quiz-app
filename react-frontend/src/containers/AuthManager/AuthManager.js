@@ -54,24 +54,11 @@ class AuthManager extends Component {
 				valid: false,
 				touched: false
 			}
-    },
-    isLoggingIn: this.props.location.state ? this.props.location.state.isLoggingIn : true,
+    }
   };
 
-  openSignUpFormHandler = () => {
-    this.setState({
-      isLoggingIn: false
-    })
-  }
-
-  openLogInFormHandler = () => {
-    this.setState({
-      isLoggingIn: true
-    })
-  }
-
   closeAuthFormHandler = () => {
-    this.props.history.goBack()
+    this.props.setAuthVisibility(false)
   }
 
   inputChangedHandler = (event, controlName) => {
@@ -96,32 +83,28 @@ class AuthManager extends Component {
         password: this.state.authForm.password.value
       }
     }
-    if (!this.state.isLoggingIn) {
+    if (!this.props.isLoggingIn) {
       // If Signing Up
       reqBody.data['fullname'] = this.state.authForm.fullname.value  
     }
 
-    this.props.onAuth(reqBody, !this.state.isLoggingIn)
+    this.props.onAuth(reqBody, !this.props.isLoggingIn)
   }
 
   switchAuthAccessHandler = () => {
-    this.setState((prevState) => {
-      return {
-        isLoggingIn: !prevState.isLoggingIn,
-      }
-    })
+    this.props.setAuthMode(!this.props.isLoggingIn)
   }
 
   render() {
     const formElementsArray = []
 		for (let key in this.state.authForm) {
-      if (this.state.isLoggingIn && key !== 'fullname') {
+      if (this.props.isLoggingIn && key !== 'fullname') {
         // If Logging In, don't use the field fullname
         formElementsArray.push({
           id: key,
           config: this.state.authForm[key]
         })
-      } else if (!this.state.isLoggingIn) {
+      } else if (!this.props.isLoggingIn) {
         // If Signing Up, use all fields
         formElementsArray.push({
           id: key,
@@ -143,11 +126,11 @@ class AuthManager extends Component {
         value={formElement.config.value} />
     ))
     
-    let authFooterText = this.state.isLoggingIn ? "Don't have an account? " : "Already have an account? "
+    let authFooterText = this.props.isLoggingIn ? "Don't have an account? " : "Already have an account? "
     const authFooter = (
       <div className={styles.AuthFooter}>
         {authFooterText}
-        <span className={styles.Link} onClick={this.switchAuthAccessHandler}>{this.state.isLoggingIn ? "Sign up" : "Log in"}</span>
+        <span className={styles.Link} onClick={this.switchAuthAccessHandler}>{this.props.isLoggingIn ? "Sign up" : "Log in"}</span>
       </div>
     )
 
@@ -157,11 +140,11 @@ class AuthManager extends Component {
           className={styles.AuthModal}
           show={true}
           modalClosed={this.closeAuthFormHandler}
-          header={this.state.isLoggingIn ? 'Log In to to your quizz account' : 'Sign Up and start quizzing'}>
+          header={this.props.isLoggingIn ? 'Log In to to your quizz account' : 'Sign Up and start quizzing'}>
           {this.props.loading ? <Spinner className={styles.AuthSpinner} /> : <Logo className={styles.AuthLogo} />}  
           <form onSubmit={this.submitHandler}>
             {form}
-            <Button className={styles.AuthSubmitBtn} btnType="Accent">{this.state.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>
+            <Button className={styles.AuthSubmitBtn} btnType="Accent">{this.props.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>
           </form>
           {authFooter}
         </Modal>
@@ -172,13 +155,16 @@ class AuthManager extends Component {
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    isLoggingIn: state.auth.authForm.isLoggingIn 
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (authData, isSignup) => dispatch(actions.auth(authData, isSignup))
+    onAuth: (authData, isSignup) => dispatch(actions.auth(authData, isSignup)),
+    setAuthVisibility: (isVisible) => dispatch(actions.authFormSetVisibility(isVisible)),
+    setAuthMode: (isLoggingIn) => dispatch(actions.authFormSetMode(isLoggingIn))
   }
 }
 

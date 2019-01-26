@@ -86,3 +86,17 @@ export const autoAuth = () => {
     }
   }
 }
+
+export const authFormSetVisibility = (isVisible) => {
+  return {
+    type: actionTypes.AUTH_FORM_SET_VISIBILITY,
+    isVisible: isVisible
+  }
+}
+
+export const authFormSetMode = (isLoggingIn) => {
+  return {
+    type: actionTypes.AUTH_FORM_SET_MODE,
+    isLoggingIn: isLoggingIn
+  }
+}
