@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Layout from "./containers/Layout/Layout";
+import Home from "./containers/Home/Home";
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import ComponentTester from './containers/ComponentTester/ComponentTester'
 import Error404Page from './components/Error404Page/Error404Page'
@@ -16,7 +16,7 @@ class App extends Component {
     const routes = (
       <Switch>
         <Route path='/test' component={ComponentTester} />
-        <Route path='/' exact component={Layout} />
+        <Route path='/' exact component={Home} />
         <Route path='/error404' component={Error404Page} /> 
         <Redirect to='/error404' />
       </Switch>
