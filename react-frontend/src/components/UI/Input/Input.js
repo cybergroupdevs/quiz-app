@@ -45,7 +45,7 @@ const input = (props) => {
 	}
 
 	return (
-		<div className={classes.Input}>
+		<div className={[classes.Input, props.className].join(' ')}>
 			<label htmlFor="" className={input.Label}>{props.label}</label>
 			{inputElement}
 		</div>

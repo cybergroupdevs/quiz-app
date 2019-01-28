@@ -3,9 +3,11 @@ import styles from './AuthManager.module.css'
 import Button from '../../components/UI/Button/Button'
 import Modal from '../../components/UI/Modal/Modal'
 import Input from '../../components/UI/Input/Input'
-import { checkValidity } from '../../misc/utility'
+import checkValidity from '../../utility/checkValidity'
 import Logo from '../../components/Logo/Logo'
-import axios from '../../misc/axios'
+import * as actions from '../../store/actions'
+import { connect } from 'react-redux'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 class AuthManager extends Component {
 
@@ -52,50 +54,11 @@ class AuthManager extends Component {
 				valid: false,
 				touched: false
 			}
-    },
-    openAuthForm: false,
-    isSigningUp: false,
-    isLoggingIn: false,
+    }
   };
 
-  openSignUpFormHandler = () => {
-    this.setState({
-      openAuthForm: true,
-      isSigningUp: true,
-      isLoggingIn: false
-    })
-  }
-
-  openLogInFormHandler = () => {
-    this.setState({
-      openAuthForm: true,
-      isSigningUp: false,
-      isLoggingIn: true
-    })
-  }
-
   closeAuthFormHandler = () => {
-    this.setState((prevState) => {
-      return {
-        openAuthForm: false,
-        isSigningUp: false,
-        isLoggingIn: false,
-        authForm: {
-          fullname: {
-            ...prevState.authForm.fullname,
-            value: ''
-          },
-          email: {
-            ...prevState.authForm.email,
-            value: ''
-          },
-          password: {
-            ...prevState.authForm.password,
-            value: ''
-          }
-        }
-      }
-    })
+    this.props.setAuthVisibility(false)
   }
 
   inputChangedHandler = (event, controlName) => {
@@ -113,43 +76,46 @@ class AuthManager extends Component {
 
   submitHandler = (event) => {
     event.preventDefault()
-    const authUrl = this.state.isLoggingIn ? '/users/login' : '/users/signup'
+
     const reqBody = {
       data: {
         email: this.state.authForm.email.value,
         password: this.state.authForm.password.value
       }
     }
-    if (this.state.isSigningUp) {
+    if (!this.props.isLoggingIn) {
+      // If Signing Up
       reqBody.data['fullname'] = this.state.authForm.fullname.value  
     }
-    axios.post(authUrl, reqBody)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+
+    this.props.onAuth(reqBody, !this.props.isLoggingIn)
+  }
+
+  switchAuthAccessHandler = () => {
+    this.props.setAuthMode(!this.props.isLoggingIn)
   }
 
   render() {
     const formElementsArray = []
 		for (let key in this.state.authForm) {
-      if((this.state.isLoggingIn && key !== 'fullname') || this.state.isSigningUp) {
+      if (this.props.isLoggingIn && key !== 'fullname') {
+        // If Logging In, don't use the field fullname
         formElementsArray.push({
           id: key,
           config: this.state.authForm[key]
         })
-      }
-      if (this.state.isLoggingIn) {
-        formElementsArray.filter(formElement => {
-          return false;
+      } else if (!this.props.isLoggingIn) {
+        // If Signing Up, use all fields
+        formElementsArray.push({
+          id: key,
+          config: this.state.authForm[key]
         })
       }
     }
     
     let form = formElementsArray.map(formElement => (
       <Input 
+        className={styles.AuthInput}
         key={formElement.id}
         elementType={formElement.config.elementType}
         elementConfig={formElement.config.elementConfig}
@@ -159,27 +125,47 @@ class AuthManager extends Component {
         invalid={!formElement.config.valid}
         value={formElement.config.value} />
     ))
+    
+    let authFooterText = this.props.isLoggingIn ? "Don't have an account? " : "Already have an account? "
+    const authFooter = (
+      <div className={styles.AuthFooter}>
+        {authFooterText}
+        <span className={styles.Link} onClick={this.switchAuthAccessHandler}>{this.props.isLoggingIn ? "Sign up" : "Log in"}</span>
+      </div>
+    )
 
     return (
       <div className={styles.AuthManager}>
-        <Button btnType="Normal" clicked={this.openLogInFormHandler}>
-          Log In
-        </Button>
-        <div className={styles.HorizontalStub} />
-        <Button btnType="Accent" clicked={this.openSignUpFormHandler}>
-          Sign Up
-        </Button>
         <Modal
-          show={this.state.openAuthForm}
-          modalClosed={this.closeAuthFormHandler}>
+          className={styles.AuthModal}
+          show={true}
+          modalClosed={this.closeAuthFormHandler}
+          header={this.props.isLoggingIn ? 'Log In to to your quizz account' : 'Sign Up and start quizzing'}>
+          {this.props.loading ? <Spinner className={styles.AuthSpinner} /> : <Logo className={styles.AuthLogo} />}  
           <form onSubmit={this.submitHandler}>
             {form}
-            <Button btnType="Info">{this.state.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>
+            <Button className={styles.AuthSubmitBtn} btnType="Accent">{this.props.isLoggingIn ? 'Log In' : 'Sign Up'}</Button>
           </form>
+          {authFooter}
         </Modal>
       </div>
     );
   }
 }
 
-export default AuthManager
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    isLoggingIn: state.auth.authForm.isLoggingIn 
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (authData, isSignup) => dispatch(actions.auth(authData, isSignup)),
+    setAuthVisibility: (isVisible) => dispatch(actions.authFormSetVisibility(isVisible)),
+    setAuthMode: (isLoggingIn) => dispatch(actions.authFormSetMode(isLoggingIn))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthManager)

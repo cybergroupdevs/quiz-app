@@ -17,12 +17,12 @@ class Modal extends Component {
 					show={this.props.show}
 					clicked={this.props.modalClosed} />
 				<div
-					className={classes.Modal}
+					className={[classes.Modal, this.props.className].join(' ')}
 					style={{
 						transform: this.props.show ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(-100vh)',
 						opacity: this.props.show ? '1' : '0'
 					}}>
-					<Card onclose={this.props.modalClosed}>
+					<Card onclose={this.props.modalClosed} header={this.props.header}>
 						{this.props.children}
 					</Card>
 				</div>

@@ -1,0 +1,2 @@
+export const AUTH_TOKEN = 'AUTH_TOKEN'
+export const AUTH_EXPIRATION_DATE = 'AUTH_EXPIRATION_DATE'

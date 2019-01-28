@@ -27,3 +27,12 @@
 .CloseButton:hover {
   color: var(--gray-dark)
 }
+
+.CardHeader {
+  padding: 8px 0 16px 0;
+  border-bottom: var(--gray) 1px solid;
+  width: 300px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: var(--primary-color-dark)
+}

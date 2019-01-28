@@ -10,12 +10,25 @@ const card = (props) => {
         onClick={props.onclose}>&#215;</span>
     )
   }
-  return (
-    <div className={styles.Card}>
-      {closeButton}
-      {props.children}
-    </div>
-  )
+
+  let cardContent = null
+  if (props.header) {
+    cardContent = (
+      <div className={[styles.Card, props.className].join(' ')}>
+        {closeButton}
+        <div className={styles.CardHeader}>{props.header}</div>
+        {props.children}
+      </div>
+    )
+  } else {
+    cardContent = (
+      <div className={[styles.Card, props.className].join(' ')}>
+        {closeButton}
+        {props.children}
+      </div>
+    )
+  }
+  return cardContent
 }
 
 export default card
