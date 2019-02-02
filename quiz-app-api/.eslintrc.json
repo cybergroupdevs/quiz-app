@@ -1,53 +1,53 @@
-{
-  "globals": {
-    // Put things like jQuery, etc
-    "jQuery": true,
-    "$": true
-  },
-  "env": {
-    // I write for browser
-    "browser": true,
-    // in CommonJS
-    "node": true,
-    "es6": true
-  },
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module"
-  },
-  // To give you an idea how to override rule options:
-  "rules": {
-    // Tons of rules you can use, for example...
-    "semi": 0,
-    "quotes": [
-      1,
-      "double",
-      {
-        "allowTemplateLiterals": true
-      }
-    ],
-    "no-unused-vars": "warn",
-    "new-cap": "warn",
-    "space-before-function-paren": "off",
-    "indent": [
-      "off",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "require-jsdoc": 0,
-    "no-var": 0,
-    "comma-dangle": 0,
-    "eol-last": 0,
-    "padded-blocks": 0,
-    "quote-props": [
-      "warn",
-      "always"
-    ],
-    "max-len": 0,
-    "no-invalid-this": 0
-  },
-  "extends": "google"
-}
+// {
+//   "globals": {
+//     // Put things like jQuery, etc
+//     "jQuery": true,
+//     "$": true
+//   },
+//   "env": {
+//     // I write for browser
+//     "browser": true,
+//     // in CommonJS
+//     "node": true,
+//     "es6": true
+//   },
+//   "parserOptions": {
+//     "ecmaVersion": 6,
+//     "sourceType": "module"
+//   },
+//   // To give you an idea how to override rule options:
+//   "rules": {
+//     // Tons of rules you can use, for example...
+//     "semi": 0,
+//     "quotes": [
+//       1,
+//       "double",
+//       {
+//         "allowTemplateLiterals": true
+//       }
+//     ],
+//     "no-unused-vars": "warn",
+//     "new-cap": "warn",
+//     "space-before-function-paren": "off",
+//     "indent": [
+//       "off",
+//       2
+//     ],
+//     "linebreak-style": [
+//       "error",
+//       "unix"
+//     ],
+//     "require-jsdoc": 0,
+//     "no-var": 0,
+//     "comma-dangle": 0,
+//     "eol-last": 0,
+//     "padded-blocks": 0,
+//     "quote-props": [
+//       "warn",
+//       "always"
+//     ],
+//     "max-len": 0,
+//     "no-invalid-this": 0
+//   },
+//   "extends": "google"
+// }
