@@ -1,10 +1,8 @@
 // # API routes
 /*jshint esversion: 6 */
-let express = require("express"),
-  api = require("../controllers"),
-  apiRoutes;
-let path = require("path");
-let wrapper = require("../controllers/wrapper.js");
+const express = require("express")
+const api = require("../controllers")
+const authenticateUser = require('./middlewares/auth')
 
 apiRoutes = function (router) {
   router = express.Router();
@@ -29,8 +27,8 @@ apiRoutes = function (router) {
   router.post('/users/signup', (req, res) => api.user.signup(req, res))
   router.post('/users/login', (req, res) => api.user.login(req, res))
 
-
   // TEAM
+  router.use('/teams', authenticateUser)
   router.get('/teams/test', api.team.test)
   router.get('/teams', (req, res) => api.team.list(req, res))
   router.post('/teams', (req, res) => api.team.create(req, res))
