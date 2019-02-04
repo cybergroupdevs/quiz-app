@@ -1,7 +1,8 @@
 /*jshint esversion: 6 */
 const ResourceController = require('../ResourceController');
 const { User } = require("../../models");
-const bcrypt = require("bcryptjs");
+const { hashPassword, comparePassword } = require('../../utils/bcryptPassword')
+const generateUsername = require('../../utils/generateUsername')
 const jwt = require('jsonwebtoken')
 const config = require('../../../config/config.js');
 
@@ -23,10 +24,10 @@ class UserController extends ResourceController {
           })
         } else {
           // Hash the password to store it in the database
-          req.body.data.password = this.getHashedPassword(req.body.data.password)
+          req.body.data.password = hashPassword(req.body.data.password)
           
           req.body.data.username = req.body.data.username 
-            || req.body.data.fullname.replace(/\s/g,'').toLowerCase() + req.body.data.password.replace(/\D/g, '').substring(4)
+            || generateUsername(req.body.data.fullname, req.body.data.password)
             
           this.create(req, res)
         }
@@ -44,8 +45,8 @@ class UserController extends ResourceController {
       .then(user => {
         if (user) {
           // email found, now compare password
-          bcrypt.compare(req.body.data.password, user.password)
-            .then(passwordsMatch => {
+          comparePassword(req.body.data.password, user.password,
+            (passwordsMatch) => {
               if (passwordsMatch) {
                 // Generate JWT token for session management
                 const token = jwt.sign(
@@ -73,6 +74,10 @@ class UserController extends ResourceController {
                   code: 'IP' 
                 })
               }
+            },
+            (error) => {
+              console.log(error);
+              res.status(500).json({ error });
             })
         } else {
           // email not found
@@ -114,21 +119,9 @@ class UserController extends ResourceController {
     }
     // If password is to be updated, it will be hashed
     if (req.body.data.password) {
-      req.body.data.password = this.getHashedPassword(req.body.data.password)
+      req.body.data.password = hashPassword(req.body.data.password)
     }
     super.update(req, res)
-  }
-
-  getHashedPassword(plainPassword) {
-    // TODO: Do this asynchronously 
-    try {
-      const salt = bcrypt.genSaltSync(10);
-      const hashedPassword = bcrypt.hashSync(plainPassword, salt)
-  
-      return hashedPassword;
-    } catch (error) {
-      console.log(error)
-    }
   }
 }
 

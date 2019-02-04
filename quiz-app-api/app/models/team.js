@@ -4,15 +4,19 @@ const teamSchema = db.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    // unique: true
+  },
+  leader: {
+    type: db.Schema.ObjectId,
+    required: true
   },
   members: [{
-    type: String
+    type: db.Schema.Types.ObjectId,
+    ref: 'User'
   }],
   password: {
     type: String,
     required: true
-    //select: false
   }
 })
 

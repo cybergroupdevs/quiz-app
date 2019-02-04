@@ -1,14 +1,13 @@
 // # API routes
 /*jshint esversion: 6 */
-let express = require("express"),
-  api = require("../controllers"),
-  apiRoutes;
-let path = require("path");
-let wrapper = require("../controllers/wrapper.js");
+const express = require("express")
+const api = require("../controllers")
+const authenticateUser = require('./middlewares/auth')
 
 apiRoutes = function (router) {
   router = express.Router();
 
+  // USER
   router.get('/users/test', api.user.test)
   router.get('/users', (req, res) => api.user.list(req, res))
   router.post('/users', (req, res, next) => {
@@ -28,6 +27,16 @@ apiRoutes = function (router) {
   router.post('/users/signup', (req, res) => api.user.signup(req, res))
   router.post('/users/login', (req, res) => api.user.login(req, res))
 
+  // TEAM
+  router.use('/teams', authenticateUser)
+  router.get('/teams/test', api.team.test)
+  router.get('/teams', (req, res) => api.team.list(req, res))
+  router.post('/teams', (req, res) => api.team.create(req, res))
+  router.patch('/teams/:_id', (req, res) => api.team.update(req, res))
+  router.patch('/teams/:_id/addMember', (req, res) => api.team.addMember(req, res))
+  router.patch('/teams/:_id/removeMember', (req, res) => api.team.removeMember(req, res))
+  router.delete('/teams/:_id', (req, res) => api.team.delete(req, res))
+  router.post('/teams/login', (req, res) => api.team.login(req, res))
 
   // Quiz controller
   router.get("/quiz/test", (req, res) => {
@@ -65,13 +74,6 @@ apiRoutes = function (router) {
   router.get("/question/randomQuestion", api.question.randomQuestion);
   router.get("/question/generatedQuestions", api.question.generatedQuestions);
   router.get("/question/nextQuestion", api.question.nextQuestion);
-
-  //Teams Controller
-  router.post("/team", api.team.create);
-  router.get("/team", api.team.list);
-  router.delete("/team/:_id", api.team.delete);
-  router.put("/team/:_id", api.team.update);
-  router.get("/team/:_id", api.team.show);
 
   return router;
 };
